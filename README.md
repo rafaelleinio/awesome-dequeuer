@@ -72,6 +72,8 @@ So the problem can be solved by calling 2 functions of this class in sequence:
 
 Another important function to explain is the `find_job` function. Giving an agent, the jobs list, the job request and the list of job assignments this function will return one or an empty job assignment. First the function just create the `sorting_rule` and the `filter_rule` passing the `agent` to the functions that create these rules. Than from the jobs list is filtered only the jobs that this agent can do (with the `filtering_rule`), than these `doable_jobs` are sorted with the `sorting_rule` to put the most relevant jobs at the beginning. Than the function construct the `job_assigned` json schema if the job is not already assigned (this information is in `job_assignments` that was passed to the function).
 
+\* It's important to observe how this class is generalist and very flexible, the logic here is not fixed to the data source, to sorting or filtering rules and nether to where the data will be dumped. Another care that I took when build this class was not make too many references to the entities schema. The only field that I reference is "id" in all of them, because id is very uncommon to change. So all the access to other attributes are made in the sorting and filtering rules, so this business class is resilient to schema changing.
+
 ### dequeuer/loaders
 Here is implemented the functions that giving data in python dictionaries it will load this data as json to some data sink.
 
